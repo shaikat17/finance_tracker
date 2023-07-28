@@ -1,7 +1,9 @@
-import firebase from "firebase/app"
-import 'firebase/firestore'
-import 'firebase/auth'
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_apiKey,
   authDomain: import.meta.env.VITE_authDomain,
@@ -11,9 +13,7 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_appId
 };
 
-firebase.initializeApp(firebaseConfig)
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
-const projectFirestore = firebase.firestore()
-const projectAuth = firebase.auth()
-
-export { projectFirestore, projectAuth }
+export { app }
