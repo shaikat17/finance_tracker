@@ -1,13 +1,17 @@
 import { useState } from "react";
 import styles from "./Login.module.css";
+import { useLogin } from "../../hooks/useLogin";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { login } = useLogin()
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(email, password);
+    login(email, password)
   };
 
   return (
