@@ -6,22 +6,26 @@ import Layout from "../Layout/Layout";
 import ProtectedRoute from "./ProtectedRoute";
 
 export const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <ProtectedRoute><Layout /></ProtectedRoute>,
-      children: [
-        {
-          path: "/",
-          element: <Home />,
-        },
-        {
-          path: "/login",
-          element: <Login />,
-        },
-        {
-          path: "/signup",
-          element: <Signup />,
-        },
-      ]
-    }
-  ]);
+  {
+    path: "/",
+    element: (
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
+]);

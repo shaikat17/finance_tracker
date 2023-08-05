@@ -1,5 +1,5 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
 import { app } from "../firebase/config";
 
 export const AuthContext = createContext()
@@ -7,9 +7,9 @@ export const AuthContext = createContext()
 export const authReducer = (state, action) => {
     switch(action.type) {
         case 'LOGIN':
-            return {...state, user: action.payload}
+            return {...state, user: action.payload }
         case 'LOGOUT':
-            return {...state, user: null}
+            return {...state, user: null, authIsReady: false}
         case 'AUTH_IS_READY':
             return {...state, user: action.payload, authIsReady: true}
 
@@ -19,6 +19,7 @@ export const authReducer = (state, action) => {
 }
 
 export const AuthContextProvider = ({children}) => {
+    const [loading, setLoading] = useState(true)
     const auth = getAuth(app);
 
     const [state, dispatch] = useReducer(authReducer, {
@@ -32,11 +33,14 @@ export const AuthContextProvider = ({children}) => {
               // User is signed in, see docs for a list of available properties
               // https://firebase.google.com/docs/reference/js/auth.user
               const uid = user.uid;
-              dispatch({type: 'AUTH_IS_READY', payload: user})
+              console.log(user)
+              setLoading(false)
+              dispatch({type: 'AUTH_IS_READY', payload: user});
               // ...
             } else {
               // User is signed out
               // ...
+              setLoading(false)
             }
           });
 
@@ -47,7 +51,7 @@ export const AuthContextProvider = ({children}) => {
 
     console.log('Auth State: ', state)
     return (
-        <AuthContext.Provider value={{...state, dispatch}}>
+        <AuthContext.Provider value={{...state, dispatch, loading, setLoading}}>
             {children}
         </AuthContext.Provider>
     )
