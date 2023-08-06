@@ -3,6 +3,7 @@ import { useState } from 'react'
 // styles
 import styles from './Signup.module.css'
 import { useSignUp } from '../../hooks/useSignUp'
+import { Link } from 'react-router-dom'
 
 export default function Signup() {
   const [email, setEmail] = useState('')
@@ -21,6 +22,7 @@ export default function Signup() {
   }
 
   return (
+    <>
     <form onSubmit={handleSubmit} className={styles['signup-form']}>
       <h2>Sign up</h2>
       <label>
@@ -51,5 +53,7 @@ export default function Signup() {
       {isPending && <button className='btn' disabled>Loading</button>}
       { error && <p>{error}</p>}
     </form>
+    <p className={styles.message_box}>Don't have an account? <Link to="/login">Login</Link> </p>
+    </>
   )
 }

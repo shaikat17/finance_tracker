@@ -17,3 +17,18 @@
     color: #777;
     width: 100%;
   }
+
+  .message_box {
+    max-width: 360px;
+    margin: 60px auto;
+    padding: 20px;
+  }
+
+  .message_box a {
+    text-decoration: none;
+    color: #5C4B99;
+  }
+
+  .message_box a:hover {
+    color: #F31559;
+  }
