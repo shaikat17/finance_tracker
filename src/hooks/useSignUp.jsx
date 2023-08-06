@@ -6,6 +6,8 @@ import {
 } from "firebase/auth";
 import { app } from "../firebase/config";
 import { useAuthContext } from "./useAuthContext";
+import { useLogOut } from "./useLogout";
+import { useNavigate } from "react-router-dom";
 
 export const useSignUp = () => {
   const [error, setError] = useState(null);
@@ -14,11 +16,12 @@ export const useSignUp = () => {
   const auth = getAuth(app);
 
   const { dispatch } = useAuthContext()
+  const { logOut } = useLogOut()
+  const navigate = useNavigate()
 
   const signup = async (email, password, displayName) => {
     setError(null);
     setIsPending(true);
-
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
@@ -35,8 +38,10 @@ export const useSignUp = () => {
             // ...
             console.log("Profile Updated.");
 
-            // dispatch login action
-            dispatch({type: 'LOGIN', payload: user})
+            // Loged out the user
+            logOut()
+            navigate('/login')
+            
           })
           .catch((error) => {
             // An error occurred
