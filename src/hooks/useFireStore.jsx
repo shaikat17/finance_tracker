@@ -34,7 +34,6 @@ export const useFireStore = (collectionName) => {
     // add a document
     const addDocument = async (doc) => {
         dispatch({ type: 'IS_PENDING' })
-        console.log(doc)
 
         try {
             const addedDocument = await setDoc(ref, doc)
