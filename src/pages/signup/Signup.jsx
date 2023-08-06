@@ -53,7 +53,7 @@ export default function Signup() {
       {isPending && <button className='btn' disabled>Loading</button>}
       { error && <p>{error}</p>}
     </form>
-    <p className={styles.message_box}>Don't have an account? <Link to="/login">Login</Link> </p>
+    <p className={styles.message_box}>Already have an account? <Link to="/login">Login</Link> </p>
     </>
   )
 }
