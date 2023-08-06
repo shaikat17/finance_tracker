@@ -1,6 +1,7 @@
 import { useReducer, useState } from "react"
 import { db } from "../firebase/config"
 import { async } from "@firebase/util"
+import { collection, doc, setDoc } from "firebase/firestore"
 
 let initialState = {
     document: null,
@@ -22,23 +23,25 @@ const fireStoreReducer = (state, action) => {
     }
 }
 
-export const useFireStore = (collection) => {
+export const useFireStore = (collectionName) => {
     const [response, dispatch] = useReducer(fireStoreReducer, initialState)
 
     const [isCanclled, setIsCancelled] = useState(false)
 
     // collection ref
-    const ref = db.collection(collection)
+    const ref = doc(collection(db, collectionName))
 
     // add a document
     const addDocument = async (doc) => {
         dispatch({ type: 'IS_PENDING' })
+        console.log(doc)
 
         try {
-            const addedDocument = await ref.add(doc)
-            dispatch({ type: 'ADDED_DOCUMENT', payload: })
+            const addedDocument = await setDoc(ref, doc)
+            dispatch({ type: 'ADDED_DOCUMENT', payload: addedDocument })
         } catch (error) {
             dispatch({ type: 'ERROR', payload: error.message })
+            console.log(error)
         }
     }
 

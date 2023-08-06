@@ -33,7 +33,7 @@ export const AuthContextProvider = ({children}) => {
               // User is signed in, see docs for a list of available properties
               // https://firebase.google.com/docs/reference/js/auth.user
               const uid = user.uid;
-              console.log(user)
+            //   console.log(user)
               setLoading(false)
               dispatch({type: 'AUTH_IS_READY', payload: user});
               // ...
@@ -49,7 +49,7 @@ export const AuthContextProvider = ({children}) => {
           }
     }, [])
 
-    console.log('Auth State: ', state)
+    // console.log('Auth State: ', state)
     return (
         <AuthContext.Provider value={{...state, dispatch, loading, setLoading}}>
             {children}
