@@ -1,7 +1,7 @@
 import { useReducer, useState } from "react"
 import { db } from "../firebase/config"
 import { async } from "@firebase/util"
-import { collection, doc, setDoc } from "firebase/firestore"
+import { collection, deleteDoc, doc, setDoc } from "firebase/firestore"
 
 let initialState = {
     document: null,
@@ -15,6 +15,8 @@ const fireStoreReducer = (state, action) => {
         case 'IS_PENDING':
             return {isPending: true, document: null, success: false, error: null}
         case "ADDED_DOCUMENT":
+            return {isPending: false, document: action.payload, success: true, error: null}
+        case "DELETED_DOCUMENT":
             return {isPending: false, document: action.payload, success: true, error: null}
         case "ERROR":
             return {isPending: false, document: null, success: false, error: action.payload}
@@ -46,7 +48,14 @@ export const useFireStore = (collectionName) => {
 
     // delete a document
     const deleteDocument = async (id) => {
-
+        dispatch({ type: "IS_PENDING"})
+        try {
+            const deletedDocument = await deleteDoc(doc(db, collectionName, id))
+            dispatch({ type: "DELETED_DOCUMENT", payload: deletedDocument })
+        } catch (error) {
+            dispatch({ type: "ERROR", payload: error.message })
+            console.log(error)
+        }
     }
 
     return { addDocument, deleteDocument, response }

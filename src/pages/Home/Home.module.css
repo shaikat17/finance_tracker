@@ -91,6 +91,11 @@
   cursor: pointer;
 }
 
+.transactions button:hover {
+  background-color: #EA1179;
+  color: #f2f2f2;
+}
+
 /* Select Section Design */
 select {
   /* Reset Select */
@@ -107,9 +112,3 @@ select {
   border-radius: 5px;
 }
 
-option {
-  padding: 10px 0;
-  background-color: red;
-  height: 20px;
-  margin: 20px 0;
-}
